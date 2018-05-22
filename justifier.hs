@@ -34,7 +34,7 @@ insertSpace n (x:xs) =
 insertSpaces :: [Int] -> Int -> Int -> String -> ([Int],Int, Int, String)
 insertSpaces (a:az) i n [] = ((a:az),i,n,[])
 insertSpaces (a:az) i 0 (x:xs) = ((a:az),0, 0, (x:xs))
-insertSpaces (a:az) i n (x:xs) =
-    | i == last (a:az) = do{ insertSpace i (x:xs) ; insertSpaces (a:az) a (n-1) (x:xs)}
-	  | otherwise do{ insertSpace i (x:xs) ; insertSpaces (a:az) F (n-1) (x:xs)}
-		    where F = head ( drop 1 ( dropWhile(/= i) (a:az)))
+insertSpaces (a:az) i n (x:xs) 
+    | i == last (a:az) = insertSpaces (a:az) a (n-1) (insertSpace i (x:xs))
+    | otherwise insertSpaces (a:az) F (n-1) (insertSpace i (x:xs))
+        where F = head ( drop 1 ( dropWhile(/= i) (a:az)))
