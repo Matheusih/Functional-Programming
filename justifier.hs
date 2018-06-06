@@ -39,7 +39,7 @@ justifica (x:xs) = unlines (insertIntoLines (breakLines((lines (x:xs))))    (big
 
 insertIntoLines :: [[String]] -> Int -> [String]
 insertIntoLines [] b = []
-insertIntoLines (x:[]) b = insertSpaces (countWords x) 0 x : insertIntoLines [] b
+insertIntoLines (x:[]) b = insertSpaces 1 0 x : insertIntoLines [] b
 insertIntoLines (x:xs) b = 
   (insertSpaces 
                (quot ((b - (lineSize x)))   ((countWords x) - 1))  --1o argumento insertSpace
