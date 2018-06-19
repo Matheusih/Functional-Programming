@@ -54,5 +54,35 @@ howManyT x (Nodo n a1 a2)
   
 refleteArvore :: Arvore -> Arvore
 refleteArvore (Nodo n a1 a2)
+
+
+
+
 -- ou polimorfica:
---data ArvoreP a = Folha | Nodo a (ArvoreP a) (ArvoreP a)
+
+data TreeP a = Leaf a | Node a (TreeP a) (TreeP a)
+    deriving (Eq, Show)
+
+tree1 :: TreeP Int
+tree1 = Node 1 (Node 3 (Leaf 5) (Leaf 2)) (Leaf 4)
+
+addTree :: TreeP Int -> Int
+addTree (Leaf v) = v
+addTree (Node v a1 a2) = v + addTree a1 + addTree a2
+
+reflectTree :: TreeP Int -> TreeP Int
+reflectTree (Leaf v) = Leaf v
+reflectTree (Node v a1 a2) = (Node v (reflectTree a2) (reflectTree a1))
+
+
+heightTree :: TreeP Int -> Int
+heightTree (Leaf v) = 1
+heightTree (Node v a1 a2) = 1 + (max (heightTree a1) (heightTree a2))
+
+treeToList :: TreeP Int -> [Int]
+treeToList (Leaf v) = v : []
+treeToList (Node v a1 a2) = v : (treeToList a1 ++ treeToList a2)
+
+mapTree :: (a->b) -> TreeP a -> TreeP b
+mapTree f (Leaf v) = Leaf (f v)
+mapTree f (Node v a1 a2) = Node (f v) (mapTree f a1) (mapTree f a2)
