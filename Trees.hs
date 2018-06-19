@@ -86,3 +86,8 @@ treeToList (Node v a1 a2) = v : (treeToList a1 ++ treeToList a2)
 mapTree :: (a->b) -> TreeP a -> TreeP b
 mapTree f (Leaf v) = Leaf (f v)
 mapTree f (Node v a1 a2) = Node (f v) (mapTree f a1) (mapTree f a2)
+
+
+
+--Non Binary Polimorphic Tree
+-- data NBTree a = Node a [NBTree a]
