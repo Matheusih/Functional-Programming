@@ -1,0 +1,31 @@
+data Lista a = Cons a (Lista a) | Vazio
+  deriving (Eq, Show)
+
+ex1 :: Lista Int
+ex1 = Cons 1 (Cons 2(Cons 3(Cons 4 Vazio)))
+
+ex2 :: Lista Int
+ex2 = Cons 7 (Cons 8(Cons 9(Cons 0 Vazio)))
+
+tamanho :: Lista a -> Int
+tamanho Vazio = 0 
+tamanho (Cons x xs) = 1 + tamanho xs
+
+mapList :: (a->b) -> Lista a -> Lista b
+mapList f Vazio = Vazio
+mapList f (Cons x xs) = Cons (f x) (mapList f xs)
+
+foldrLista :: (a->a->a) -> Lista a -> a
+foldrLista f (Cons x Vazio) = x
+foldrLista f (Cons x xs) =  f x (foldrLista f xs)
+
+filterLista :: (a->Bool) -> Lista a -> Lista a
+filterLista f Vazio = Vazio
+filterLista f (Cons x xs)
+  | f x = Cons x (filterLista f xs)
+  | otherwise = filterLista f xs
+
+concatLista :: Lista a -> Lista a -> Lista a
+concatLista Vazio (Cons x xs) = (Cons x xs)
+concatLista (Cons x xs) Vazio = (Cons x xs)
+concatLista (Cons x xs) (Cons y ys) = Cons x (concatLista xs (Cons y ys))
